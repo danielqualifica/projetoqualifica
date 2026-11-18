@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso Administrativo - GeekZone</title>
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <form id="loginForm">
+
+        <h1>Acesso Administrativo</h1>
+
+        <label for="loginEmail">E-mail</label>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Digite seu e-mail"
+            autocomplete="username"
+            required
+        >
+
+        <br><br>
+
+        <label for="loginPassword">Senha</label>
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+        >
+
+        <p id="loginStatus"></p>
+
+        <button type="submit">Entrar</button>
+
+        <button type="button" onclick="window.location.href='index.html'">
+            Voltar
+        </button>
+
+    </form>
+
+
+    <!-- PAINEL ADMINISTRATIVO -->
+    <div id="adminPanel" style="display: none;">
+
+        <h1>Painel Administrativo</h1>
+
+        <button id="logoutButton" type="button">
+            Sair
+        </button>
+
+        <button type="button" onclick="window.location.href='index.html'">
+            Voltar para o site
+        </button>
+
+        <hr>
+
+        <h2>Adicionar produto</h2>
+
+        <form id="productForm">
+
+            <label for="productName">Nome do produto</label>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Nome do produto"
+                required
+            >
+
+            <br><br>
+
+            <label for="productPrice">Preço</label>
+
+            <input
+                type="number"
+                id="productPrice"
+                step="0.01"
+                min="0.01"
+                placeholder="Ex: 199.90"
+                required
+            >
+
+            <br><br>
+
+            <label for="productImage">URL da imagem</label>
+
+            <input
+                type="url"
+                id="productImage"
+                placeholder="https://..."
+                required
+            >
+
+            <br><br>
+
+            <label for="productDescription">Descrição</label>
+
+            <textarea
+                id="productDescription"
+                placeholder="Descrição do produto"
+            ></textarea>
+
+            <br><br>
+
+            <button type="submit" id="productSubmit">
+                Adicionar produto
+            </button>
+
+        </form>
+
+        <p id="productStatus"></p>
+
+    </div>
+
+    <script type="module" src="assets/js/admin.js"></script>
+
+</body>
+
+</html>

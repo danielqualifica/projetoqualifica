@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Painel Administrativo - GeekZone</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <script src="assets/js/auth.js"></script>
+  <script>GeekZoneAuth.requireAuth();</script>
+</head>
+<body class="adm-body">
+
+  <header class="adm-header">
+    <a class="adm-brand" href="index.html" aria-label="GeekZone - ver a loja">
+      <span class="mark" aria-hidden="true">◆</span><span>Geek <strong>ZONE</strong> · Admin</span>
+    </a>
+    <div class="actions">
+      <a class="adm-btn small" href="index.html">Ver a loja</a>
+      <button class="adm-btn small" id="logoutButton" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main class="adm-main">
+    <h1>Painel administrativo</h1>
+
+    <div class="adm-tabs" role="tablist" aria-label="Seções do painel">
+      <button class="adm-tab" id="tab-lista" role="tab" aria-selected="true" aria-controls="panel-lista" type="button">Produtos</button>
+      <button class="adm-tab" id="tab-form" role="tab" aria-selected="false" aria-controls="panel-form" type="button">Cadastrar produto</button>
+    </div>
+
+    <!-- ABA: LISTA (Read / Update / Delete) -->
+    <section id="panel-lista" role="tabpanel" aria-labelledby="tab-lista">
+      <div class="adm-card">
+        <div class="adm-toolbar">
+          <input class="adm-input" type="search" id="searchInput" placeholder="Buscar por nome ou categoria..." aria-label="Buscar produtos">
+          <span class="adm-count" id="countLabel" aria-live="polite"></span>
+          <span class="spacer"></span>
+          <button class="adm-btn small" id="exportButton" type="button">Exportar</button>
+          <button class="adm-btn small" id="importButton" type="button">Importar</button>
+          <button class="adm-btn small" id="resetButton" type="button">Restaurar padrão</button>
+          <input type="file" id="importInput" accept="application/json,.json" hidden>
+        </div>
+        <div class="adm-list" id="productList"></div>
+      </div>
+    </section>
+
+    <!-- ABA: CADASTRAR / EDITAR (Create / Update) -->
+    <section id="panel-form" role="tabpanel" aria-labelledby="tab-form" hidden>
+      <div class="adm-card">
+        <div class="adm-edit-banner" id="editBanner" hidden></div>
+
+        <form id="productForm" novalidate>
+          <div class="adm-form-grid">
+            <div class="adm-field">
+              <label for="productName">Nome do produto *</label>
+              <input class="adm-input" type="text" id="productName" maxlength="80" placeholder="Ex: Elden Ring" required>
+            </div>
+
+            <div class="adm-field">
+              <label for="productPrice">Preço (R$) *</label>
+              <input class="adm-input" type="number" id="productPrice" step="0.01" min="0.01" inputmode="decimal" placeholder="Ex: 199.90" required>
+            </div>
+
+            <div class="adm-field">
+              <label for="productCategory">Categoria</label>
+              <input class="adm-input" type="text" id="productCategory" maxlength="60" placeholder="Ex: RPG • Mundo aberto">
+            </div>
+
+            <div class="adm-field">
+              <label for="productTag">Selo (opcional)</label>
+              <input class="adm-input" type="text" id="productTag" maxlength="24" placeholder="Ex: Pré-venda, Novo, Oferta">
+            </div>
+
+            <div class="adm-field full">
+              <label for="productImage">Imagem (URL ou caminho) *</label>
+              <input class="adm-input" type="text" id="productImage" placeholder="https://... ou assets/img/jogo.jpg">
+              <small>Ou envie um arquivo do seu computador:</small>
+              <input class="adm-input" type="file" id="productFile" accept="image/*">
+            </div>
+
+            <div class="adm-field full">
+              <div class="adm-preview" id="imagePreview">Sem imagem</div>
+            </div>
+
+            <div class="adm-field full">
+              <label for="productDescription">Descrição</label>
+              <textarea class="adm-input" id="productDescription" maxlength="400" placeholder="Descrição do produto"></textarea>
+            </div>
+          </div>
+
+          <p class="adm-status" id="formStatus" role="alert"></p>
+
+          <div class="adm-form-actions">
+            <button class="adm-btn primary" id="productSubmit" type="submit">Cadastrar produto</button>
+            <button class="adm-btn" id="cancelEdit" type="button" hidden>Cancelar edição</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="adm-dialog" id="confirmDialog">
+    <h2 id="confirmTitle"></h2>
+    <p id="confirmText"></p>
+    <form method="dialog">
+      <button class="adm-btn" value="cancel">Cancelar</button>
+      <button class="adm-btn danger" id="confirmOk" value="ok">Confirmar</button>
+    </form>
+  </dialog>
+
+  <div class="adm-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

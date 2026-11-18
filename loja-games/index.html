@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+  <meta
+    name="description"
+    content="Encontre seus próximos jogos favoritos na GeekZone.">
+
+  <meta name="theme-color" content="#f7f7fb">
+
+  <title>GeekZone</title>
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- TensorFlow.js e Teachable Machine (busca por foto) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+
+  <!-- Banco de produtos (CRUD do painel), JS principal e vitrine -->
+  <script src="assets/js/db.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/produtos-loja.js" defer></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header class="site-header">
+
+    <a class="brand" href="#" aria-label="GeekZone - início">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+
+      <span>
+        Geek <strong>ZONE</strong>
+      </span>
+    </a>
+
+
+    <div class="header-actions">
+
+      <button
+        class="icon-button"
+        id="theme-toggle"
+        type="button"
+        aria-label="Ativar modo escuro"
+        aria-pressed="false">
+
+        <span
+          class="theme-icon"
+          aria-hidden="true">
+          ☾
+        </span>
+
+        <span class="button-label">
+          Modo escuro
+        </span>
+
+      </button>
+
+      <!--BOTÃO ADMINISTRADOR-->
+      <button
+  onclick="window.location.href='login.html'"
+  class="icon-button"
+  id="admin-access-button"
+  type="button"
+  aria-label="Acesso Administrativo">
+  ⚙️ Acesso administrativo
+</button>
+
+
+      <span
+        class="theme-icon"
+        aria-hidden="true">
+      </span>
+
+      <!--termina aqui-->
+
+      <button
+        class="cart-toggle"
+        id="cart-toggle"
+        type="button"
+        aria-controls="cart-panel"
+        aria-expanded="false">
+
+        <span aria-hidden="true">🛒</span>
+
+        <span>
+          Carrinho
+        </span>
+
+        <span
+          class="cart-count"
+          id="cart-count"
+          aria-label="0 itens">
+          0
+        </span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- CONTEÚDO PRINCIPAL -->
+
+  <main class="container">
+
+    <!-- HERO -->
+
+    <section
+      class="hero"
+      aria-labelledby="page-title">
+
+      <p class="eyebrow">
+        SEU PRÓXIMO JOGO COMEÇA AQUI
+      </p>
+
+      <h1 id="page-title">
+        Grandes jogos.<br>
+        <span>Grandes aventuras.</span>
+      </h1>
+
+      <p>
+        Confira nossa seleção e monte sua próxima gameplay.
+      </p>
+
+    </section>
+
+
+    <!-- CATÁLOGO -->
+
+    <section
+      class="catalog"
+      aria-labelledby="catalog-title">
+
+      <div class="section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            ESCOLHIDOS PARA VOCÊ
+          </p>
+
+          <h2 id="catalog-title">
+            Destaques da loja
+          </h2>
+
+        </div>
+
+        <span class="catalog-note">
+          Carregando jogos...
+        </span>
+
+      </div>
+
+
+      <div class="product-grid">
+
+        <!-- Os produtos são desenhados por assets/js/produtos-loja.js -->
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- CARRINHO -->
+
+  <div
+    class="cart-backdrop"
+    id="cart-backdrop"
+    hidden>
+  </div>
+
+
+  <aside
+    class="cart-panel"
+    id="cart-panel"
+    aria-labelledby="cart-title"
+    aria-hidden="true"
+    inert>
+
+    <div class="cart-header">
+
+      <div>
+
+        <p class="eyebrow">
+          SUA SELEÇÃO
+        </p>
+
+        <h2 id="cart-title">
+          Meu carrinho
+        </h2>
+
+      </div>
+
+
+      <button
+        class="close-cart icon-button"
+        id="close-cart"
+        type="button"
+        aria-label="Fechar carrinho">
+
+        ✕
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="cart-content"
+      id="cart-items"
+      aria-live="polite">
+
+      <p class="empty-cart">
+        Seu carrinho está vazio. Que tal escolher um jogo?
+      </p>
+
+    </div>
+
+
+    <div class="cart-summary">
+
+      <div class="summary-line">
+
+        <span>
+          Subtotal
+        </span>
+
+        <strong id="cart-subtotal">
+          R$ 0,00
+        </strong>
+
+      </div>
+
+
+      <div class="summary-line total-line">
+
+        <span>
+          Total
+        </span>
+
+        <strong id="cart-total">
+          R$ 0,00
+        </strong>
+
+      </div>
+
+
+      <button
+        class="checkout-button"
+        id="checkout-button"
+        type="button"
+        disabled>
+
+        Finalizar compra
+
+      </button>
+
+
+      <p class="checkout-note">
+        Finalização demonstrativa — nenhum pagamento será realizado.
+      </p>
+
+    </div>
+
+  </aside>
+
+
+  <!-- TOAST -->
+
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite">
+  </div>
+
+
+  <!-- CHAT -->
+
+  <button
+    id="btnOpenChat"
+    class="chat-trigger-btn"
+    type="button"
+    onclick="toggleChat()">
+
+    💬 Tem dúvidas? Chame nosso vendedor!
+
+  </button>
+
+
+  <section
+    id="chatBox"
+    class="chat-box-container"
+    aria-label="Robô Assistente"
+    aria-hidden="true">
+
+    <!-- HEADER DO CHAT -->
+
+    <div class="chat-box-header">
+
+      <div class="chat-title">
+
+        <span class="chat-status"></span>
+
+        <span>
+          Robô Assistente
+        </span>
+
+      </div>
+
+
+      <button
+        class="chat-close-btn"
+        type="button"
+        onclick="toggleChat()"
+        aria-label="Fechar chat">
+
+        &times;
+
+      </button>
+
+    </div>
+
+
+    <!-- CORPO -->
+
+    <div
+      id="chatBody"
+      class="chat-box-body">
+
+      <div class="chat-message bot">
+
+        Olá, sou o Robô Assistente.<br>
+        Pode perguntar sobre frete, desconto ou enviar uma foto para encontrar um jogo.
+
+      </div>
+
+    </div>
+
+
+    <!-- ÁREA DE RECONHECIMENTO -->
+
+    <div
+      id="imageSearchPanel"
+      class="image-search-panel"
+      hidden>
+
+      <div class="image-search-header">
+
+        <div>
+
+          <strong>
+            🔎 Buscar por foto
+          </strong>
+
+          <p>
+            Mostre a capa do jogo para eu tentar identificá-lo.
+          </p>
+
+        </div>
+
+
+        <!-- Campo para selecionar uma imagem -->
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+hidden
+>
+
+<!-- Botão de upload -->
+<button
+id="imageSearchButton"
+class="chat-image-btn"
+type="button"
+title="Enviar foto para identificar um jogo"
+aria-label="Enviar foto para identificar um jogo">
+
+📷
+
+</button>
+
+      </div>
+
+
+      <div
+        id="webcam-container"
+        class="webcam-container">
+
+        <div class="webcam-placeholder">
+          <span>📷</span>
+          <p>
+            Clique em "Iniciar câmera" para começar.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div
+        id="label-container"
+        class="label-container">
+      </div>
+
+
+      <div class="image-search-actions">
+
+        <button
+          id="startCameraButton"
+          class="camera-start-button"
+          type="button">
+
+          📷 Iniciar câmera
+
+        </button>
+
+
+        <button
+          id="stopCameraButton"
+          class="camera-stop-button"
+          type="button"
+          hidden>
+
+          Parar câmera
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- RODAPÉ -->
+
+    <div class="chat-box-footer">
+
+      <input
+        type="text"
+        id="userInput"
+        class="chat-input"
+        placeholder="Digite sua dúvida..."
+        autocomplete="off"
+        aria-label="Digite sua mensagem">
+
+      <button
+        class="chat-send-btn"
+        type="button"
+        onclick="sendMessage()">
+
+        Enviar
+
+      </button>
+
+
+      <button
+  id="imageSearchPanelButton"
+  class="chat-image-btn"
+  type="button"
+  title="Enviar foto para identificar um jogo"
+  aria-label="Enviar foto para identificar um jogo">
+  📷
+</button>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- RODAPÉ -->
+
+  <footer class="site-footer">
+
+    <p>
+      © <span id="current-year"></span> GeekZone. By iceramas.
+    </p>
+
+  </footer>
+
+</body>
+</html>

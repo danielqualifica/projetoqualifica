@@ -1,0 +1,124 @@
+/* Estilos do acesso administrativo (usa as variáveis de styles.css) */
+
+.adm-body { min-height: 100vh; background: var(--page); color: var(--text); font-family: "DM Sans", Arial, sans-serif; margin: 0; }
+
+/* Botões e campos */
+.adm-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  padding: .65rem 1.1rem; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font-weight: 600; cursor: pointer; text-decoration: none;
+  transition: background-color .2s, border-color .2s, transform .1s;
+}
+.adm-btn:hover { background: var(--surface-soft); }
+.adm-btn:active { transform: translateY(1px); }
+.adm-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.adm-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.adm-btn.danger { color: #d93a4a; border-color: color-mix(in srgb, #d93a4a 40%, var(--border)); }
+.adm-btn.danger:hover { background: #d93a4a; color: #fff; }
+.adm-btn.small { padding: .4rem .75rem; font-size: .88rem; border-radius: 10px; }
+.adm-btn:disabled { opacity: .6; cursor: not-allowed; }
+.adm-btn:focus-visible, .adm-input:focus-visible, .adm-tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.adm-field { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+.adm-field label { font-weight: 600; font-size: .92rem; }
+.adm-field small { color: var(--muted); }
+.adm-input {
+  width: 100%; padding: .75rem .9rem; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit;
+}
+textarea.adm-input { min-height: 110px; resize: vertical; }
+
+.adm-status { min-height: 1.3rem; margin: .5rem 0 0; font-size: .92rem; color: var(--muted); }
+.adm-status.error { color: #d93a4a; }
+.adm-status.ok { color: #1f9d55; }
+
+/* Login */
+.login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+.login-card {
+  width: 100%; max-width: 420px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 24px; padding: 2rem; box-shadow: var(--shadow);
+}
+.login-card h1 { margin: .25rem 0 .35rem; font-size: 1.7rem; }
+.login-card p.lead { margin: 0 0 1.5rem; color: var(--muted); }
+.adm-brand { display: inline-flex; gap: .5rem; font-weight: 500; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+.adm-brand .mark { color: var(--accent); }
+.pass-row { position: relative; }
+.pass-row .adm-input { padding-right: 5.2rem; }
+.pass-toggle {
+  position: absolute; right: .4rem; top: 50%; transform: translateY(-50%);
+  border: 0; background: transparent; color: var(--accent); font-weight: 600; cursor: pointer; padding: .4rem .6rem;
+}
+.login-actions { display: flex; flex-direction: column; gap: .6rem; margin-top: .5rem; }
+
+/* Painel */
+.adm-header {
+  position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; padding: .9rem clamp(1rem, 4vw, 2.5rem);
+  background: var(--surface); border-bottom: 1px solid var(--border);
+}
+.adm-header .actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.adm-main { max-width: 1040px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 2rem) 4rem; }
+.adm-main h1 { font-size: 1.6rem; margin: .5rem 0 1rem; }
+
+.adm-tabs { display: flex; gap: .4rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; overflow-x: auto; }
+.adm-tab {
+  padding: .75rem 1.1rem; border: 0; background: transparent; color: var(--muted); font-weight: 700;
+  border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; font-family: inherit; font-size: 1rem;
+}
+.adm-tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+.adm-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 1.25rem; box-shadow: var(--shadow); }
+
+.adm-toolbar { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+.adm-toolbar .adm-input { flex: 1 1 220px; max-width: 360px; }
+.adm-toolbar .spacer { flex: 1; }
+.adm-count { color: var(--muted); font-size: .92rem; }
+
+.adm-list { display: flex; flex-direction: column; gap: .6rem; }
+.adm-row {
+  display: grid; grid-template-columns: 64px 1fr auto auto; gap: 1rem; align-items: center;
+  padding: .7rem; border: 1px solid var(--border); border-radius: 16px; background: var(--page);
+}
+.adm-thumb { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; background: var(--surface-soft); display: block; }
+.adm-thumb.missing { display: grid; place-items: center; color: var(--muted); font-size: 1.4rem; }
+.adm-row .info { min-width: 0; }
+.adm-row .info strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adm-row .info span { color: var(--muted); font-size: .88rem; }
+.adm-row .price { font-weight: 800; white-space: nowrap; }
+.adm-row .row-actions { display: flex; gap: .4rem; }
+.adm-empty { text-align: center; color: var(--muted); padding: 2rem 1rem; }
+
+.adm-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+.adm-form-grid .full { grid-column: 1 / -1; }
+.adm-preview {
+  width: 100%; max-width: 220px; aspect-ratio: 1 / 1; border-radius: 16px; border: 1px dashed var(--border);
+  background: var(--surface-soft); display: grid; place-items: center; color: var(--muted); overflow: hidden; text-align: center; font-size: .9rem;
+}
+.adm-preview img { width: 100%; height: 100%; object-fit: cover; }
+.adm-form-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .5rem; }
+.adm-edit-banner { background: var(--accent-soft); color: var(--accent); padding: .6rem .9rem; border-radius: 12px; font-weight: 600; margin-bottom: 1rem; }
+
+dialog.adm-dialog {
+  border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; max-width: 420px; width: calc(100% - 2rem);
+  background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+}
+dialog.adm-dialog::backdrop { background: rgba(10, 10, 20, .55); }
+dialog.adm-dialog h2 { margin: 0 0 .5rem; font-size: 1.25rem; }
+dialog.adm-dialog p { color: var(--muted); margin: 0 0 1.25rem; }
+dialog.adm-dialog form { display: flex; gap: .6rem; justify-content: flex-end; }
+
+.adm-toast {
+  position: fixed; left: 50%; bottom: 1.5rem; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  background: var(--text); color: var(--page); padding: .75rem 1.2rem; border-radius: 14px; font-weight: 600;
+  transition: opacity .25s, transform .25s; z-index: 50; max-width: calc(100% - 2rem);
+}
+.adm-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 720px) {
+  .adm-row { grid-template-columns: 56px 1fr; }
+  .adm-thumb { width: 56px; height: 56px; }
+  .adm-row .price { grid-column: 2; }
+  .adm-row .row-actions { grid-column: 1 / -1; }
+  .adm-row .row-actions .adm-btn { flex: 1; }
+  .adm-form-grid { grid-template-columns: 1fr; }
+}

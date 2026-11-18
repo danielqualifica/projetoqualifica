@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Acesso Administrativo - GeekZone</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <script src="assets/js/auth.js"></script>
+  <script>if (GeekZoneAuth.isLoggedIn()) { location.replace("admin.html"); }</script>
+</head>
+<body class="adm-body">
+
+  <main class="login-wrap">
+    <form class="login-card" id="loginForm" novalidate>
+      <a class="adm-brand" href="index.html" aria-label="GeekZone - voltar à loja">
+        <span class="mark" aria-hidden="true">◆</span><span>Geek <strong>ZONE</strong></span>
+      </a>
+
+      <h1>Acesso administrativo</h1>
+      <p class="lead">Entre para gerenciar os produtos da loja.</p>
+
+      <div class="adm-field">
+        <label for="loginEmail">E-mail</label>
+        <input class="adm-input" type="email" id="loginEmail" autocomplete="username" placeholder="Digite seu e-mail" required>
+      </div>
+
+      <div class="adm-field">
+        <label for="loginPassword">Senha</label>
+        <div class="pass-row">
+          <input class="adm-input" type="password" id="loginPassword" autocomplete="current-password" placeholder="Digite sua senha" required>
+          <button class="pass-toggle" id="passToggle" type="button" aria-pressed="false">Mostrar</button>
+        </div>
+      </div>
+
+      <p class="adm-status" id="loginStatus" role="alert"></p>
+
+      <div class="login-actions">
+        <button class="adm-btn primary" id="loginSubmit" type="submit">Entrar</button>
+        <a class="adm-btn" href="index.html">Voltar para a loja</a>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById("loginForm");
+      var email = document.getElementById("loginEmail");
+      var pass = document.getElementById("loginPassword");
+      var status = document.getElementById("loginStatus");
+      var submit = document.getElementById("loginSubmit");
+      var toggle = document.getElementById("passToggle");
+
+      toggle.addEventListener("click", function () {
+        var show = pass.type === "password";
+        pass.type = show ? "text" : "password";
+        toggle.textContent = show ? "Ocultar" : "Mostrar";
+        toggle.setAttribute("aria-pressed", String(show));
+      });
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        status.className = "adm-status";
+
+        if (!email.value.trim() || !pass.value) {
+          status.textContent = "Preencha e-mail e senha.";
+          status.classList.add("error");
+          return;
+        }
+
+        submit.disabled = true;
+        status.textContent = "Entrando...";
+
+        GeekZoneAuth.login(email.value, pass.value).then(function (result) {
+          if (result.ok) {
+            window.location.replace("admin.html");
+            return;
+          }
+          status.textContent = result.message;
+          status.classList.add("error");
+          pass.value = "";
+          pass.focus();
+          submit.disabled = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
